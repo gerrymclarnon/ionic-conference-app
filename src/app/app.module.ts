@@ -25,10 +25,16 @@ import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
+import { ListPage } from '../pages/list/list';
+import { ObjectPage } from '../pages/object/object';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
+import { UserService } from '../providers/user-service';
+import { ListService } from '../providers/list-service';
+import { ObjectService } from '../providers/object-service';
 
+import firebase from 'firebase';
 
 @NgModule({
   declarations: [
@@ -46,7 +52,9 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+    ListPage,
+    ObjectPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,9 @@ import { UserData } from '../providers/user-data';
         { component: SupportPage, name: 'SupportPage', segment: 'support' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
-        { component: SignupPage, name: 'SignupPage', segment: 'signup' }
+        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
+        { component: ListPage, name: 'ListPage', segment: 'list' },
+        { component: ObjectPage, name: 'ObjectPage', segment: 'object' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -86,14 +96,33 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+    ListPage,
+    ObjectPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
     InAppBrowser,
-    SplashScreen
+    SplashScreen,
+    UserService,
+    ListService,
+    ObjectService
   ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+
+    // Fill this in with your own Firebase database config
+    var firebaseConfig = {
+      apiKey: "AIzaSyB8Qx4nlrKBectiq1PxdMonO-IKyGP3lpA",
+      authDomain: "email-8734c.firebaseapp.com",
+      databaseURL: "https://email-8734c.firebaseio.com",
+      projectId: "email-8734c",
+      storageBucket: "email-8734c.appspot.com",
+      messagingSenderId: "476597523348"
+    };
+    firebase.initializeApp( firebaseConfig );
+  }
+}

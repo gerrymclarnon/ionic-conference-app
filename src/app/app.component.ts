@@ -15,6 +15,8 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { SupportPage } from '../pages/support/support';
+import { ListPage } from '../pages/list/list';
+import { ObjectPage } from '../pages/object/object';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -45,12 +47,13 @@ export class ConferenceApp {
     { title: 'Schedule', name: 'Tabs', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
     { title: 'Speakers', name: 'Tabs', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts' },
     { title: 'Map', name: 'Tabs', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-    { title: 'About', name: 'Tabs', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+    { title: 'About', name: 'Tabs', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' },
+    { title: 'List', name: 'List', component: TabsPage, tabComponent: ListPage, index: 4, icon: 'briefcase' },
+    { title: 'Object', name: 'Object', component: TabsPage, tabComponent: ObjectPage, index: 5, icon: 'football' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Logout', name: 'Tabs', component: TabsPage, icon: 'log-out', logsOut: true }
+    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },

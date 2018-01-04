@@ -1,0 +1,29 @@
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>List</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <form [formGroup]="newListItem" (ngSubmit)="addListItem()">
+        <ion-item>
+            <ion-label>Title</ion-label>
+            <ion-input type="text" formControlName="title"></ion-input>
+        </ion-item>
+        <button [disabled]="!newListItem.valid" ion-button type="submit">Add List Item</button>
+    </form>
+
+    <ion-list>
+        <ion-item *ngFor="let listItem of list">
+            {{ listItem.title }}
+            <button ion-button item-right (click)="removeListItem( listItem )"><ion-icon name="close"></ion-icon></button>
+        </ion-item>
+    </ion-list>
+
+</ion-content>

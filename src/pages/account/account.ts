@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
+import firebase from 'firebase';
 
 
 @Component({
@@ -63,6 +64,11 @@ export class AccountPage {
   logout() {
     this.userData.logout();
     this.nav.setRoot('LoginPage');
+
+    firebase.auth().signOut()
+      .then( ( result: any ) => {
+
+      });
   }
 
   support() {
