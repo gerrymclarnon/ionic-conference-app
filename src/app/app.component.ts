@@ -10,7 +10,7 @@ import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
@@ -53,7 +53,8 @@ export class ConferenceApp {
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' }
+    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
+    { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
@@ -108,10 +109,10 @@ export class ConferenceApp {
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
-    if (this.nav.getActiveChildNav() && page.index != undefined) {
-      this.nav.getActiveChildNav().select(page.index);
-    // Set the root of the nav with params if it's a tab index
-  } else {
+    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      this.nav.getActiveChildNavs()[0].select(page.index);
+    } else {
+      // Set the root of the nav with params if it's a tab index
       this.nav.setRoot(page.name, params).catch((err: any) => {
         console.log(`Didn't set nav root: ${err}`);
       });
@@ -154,7 +155,7 @@ export class ConferenceApp {
   }
 
   isActive(page: PageInterface) {
-    let childNav = this.nav.getActiveChildNav();
+    let childNav = this.nav.getActiveChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
     if (childNav) {
