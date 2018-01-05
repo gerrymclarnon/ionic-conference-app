@@ -29,8 +29,8 @@ export class ListService {
 
         return new Promise( ( resolve, reject ) => {
             firebase.database().ref( "/list" ).push( listItem )
-                .then( ( result: any ) => resolve() )
-                .catch( ( error: any ) => reject() );
+                .then( ( ) => resolve() )
+                .catch( ( ) => reject() );
         });
     }
 
@@ -38,8 +38,8 @@ export class ListService {
 
         return new Promise( ( resolve, reject ) => {
             firebase.database().ref( "/list/" + listItem.key ).remove()
-                .then( ( result: any ) => resolve() )
-                .catch( ( error: any ) => reject() );
+                .then( ( ) => resolve() )
+                .catch( ( ) => reject() );
         });
     }
 }

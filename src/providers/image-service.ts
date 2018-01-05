@@ -21,7 +21,7 @@ export class ImageService {
 
         return new Promise( ( resolve, reject ) => {
             return firebase.storage().ref().child( image.name ).put( image )
-            .then( ( result: any ) => resolve() )
+            .then( ( ) => resolve() )
             .catch( ( error: any ) => reject( error ) );
         });
     }

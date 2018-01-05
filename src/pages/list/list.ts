@@ -29,14 +29,14 @@ export class ListPage {
     addListItem () {
 
         this.listService.addListItem( { title: this.newListItem.value.title } )
-            .then( ( result: any ) => this.newListItem.reset() )
+            .then( ( ) => this.newListItem.reset() )
             .catch( ( error: any ) => console.error( error ) );
     }
 
     removeListItem ( listItem: any ) {
 
         this.listService.removeListItem( listItem )
-            .then( ( result: any ) => {})
+            .then( ( ) => {})
             .catch( ( error: any ) => console.error( error ) );
     }
 }

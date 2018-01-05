@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+// import { NgForm } from '@angular/forms';
 
 import { NavController } from 'ionic-angular';
 
@@ -41,7 +41,7 @@ export class LoginPage {
   onLogin () : Promise<any> {
 
     return this.userService.signInWithEmailAndPassword( this.login.username, this.login.password )
-      .then( ( result: any ) => {
+      .then( ( ) => {
         // this.menuController.enable( true );
         // this.app.getRootNav().setRoot( TabsPage );
         this.userData.login(this.login.username);

@@ -66,7 +66,7 @@ export class AccountPage {
     this.nav.setRoot('LoginPage');
 
     firebase.auth().signOut()
-      .then( ( result: any ) => {
+      .then( () => {
 
       });
   }

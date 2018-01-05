@@ -36,7 +36,7 @@ export class ObjectPage {
         }
 
         return this.objectService.setObject( objectToSet )
-            .then( ( result: any ) => this.newObject.reset() )
+            .then( ( ) => this.newObject.reset() )
             .catch( ( error: any ) => console.error( error ) );
     }
 }

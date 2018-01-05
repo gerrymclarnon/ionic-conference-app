@@ -11,7 +11,7 @@ export class UserService {
         return new Promise( ( resolve, reject ) => {
             return firebase.auth().createUserWithEmailAndPassword( email, password )
                 .then( ( user: any ) => user.sendEmailVerification() )
-                .then( ( result: any ) => resolve() )
+                .then( ( ) => resolve() )
                 .catch( ( error: any ) => reject( error ) );
         })
     }
@@ -31,7 +31,7 @@ export class UserService {
 
         return new Promise( ( resolve, reject ) => {
             return firebase.auth().sendPasswordResetEmail( email )
-                .then( ( user: any ) => resolve() )
+                .then( ( ) => resolve() )
                 .catch( ( error: any ) => reject( error ) );
         });
     }

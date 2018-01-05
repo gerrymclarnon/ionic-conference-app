@@ -25,8 +25,8 @@ export class ObjectService {
 
         return new Promise( ( resolve, reject ) => {
             return firebase.database().ref( "/object" ).set( object )
-                .then( ( result: any  ) => resolve() )
-                .catch( ( error: any ) => reject() );
+                .then( ( ) => resolve() )
+                .catch( ( ) => reject() );
         });
     }
 }
