@@ -6,9 +6,9 @@ import { ListService } from '../../providers/list-service';
 
 @Component({
     selector: 'page-list',
-    templateUrl: 'list.html',
+    templateUrl: 'managers.html',
 })
-export class ListPage {
+export class ManagersPage {
 
     newListItem: FormGroup;
     list: any = [];

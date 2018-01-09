@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Players</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addPlayer()">
+        <ion-icon ios="ios-add-outline" md="md-add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let player of players">
+      <button ion-item (click)="gotoPlayerDetail(player)">
+        <h3>{{player.title}}</h3>
+        <p>
+          {{player.title}}
+        </p>
+      </button>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

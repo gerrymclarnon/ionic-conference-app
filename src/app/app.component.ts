@@ -9,13 +9,14 @@ import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
+import { ManagersPage } from '../pages/managers/managers';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { SupportPage } from '../pages/support/support';
-import { ListPage } from '../pages/list/list';
+import { PlayerListPage } from '../pages/player-list/player-list';
 import { ObjectPage } from '../pages/object/object';
 
 import { ConferenceData } from '../providers/conference-data';
@@ -48,8 +49,9 @@ export class ConferenceApp {
     { title: 'Speakers', name: 'Tabs', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts' },
     { title: 'Map', name: 'Tabs', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
     { title: 'About', name: 'Tabs', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' },
-    { title: 'List', name: 'List', component: TabsPage, tabComponent: ListPage, index: 4, icon: 'briefcase' },
-    { title: 'Object', name: 'Object', component: TabsPage, tabComponent: ObjectPage, index: 5, icon: 'football' }
+    { title: 'Players', name: 'Players', component: TabsPage, tabComponent: PlayerListPage, index: 4, icon: 'contacts' },
+    { title: 'Managers', name: 'Managers', component: TabsPage, tabComponent: ManagersPage, index: 5, icon: 'briefcase' },
+    { title: 'Next Game', name: 'Next Game', component: TabsPage, tabComponent: ObjectPage, index: 6, icon: 'football' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },

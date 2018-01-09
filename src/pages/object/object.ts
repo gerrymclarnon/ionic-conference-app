@@ -17,9 +17,9 @@ export class ObjectPage {
                     public objectService: ObjectService ) {
 
         this.newObject = this.formBuilder.group({
-            boolean: [ false ],
-            number: [ null ],
-            string: [ null ]
+            title: [ null ],
+            location: [ null ],
+            sendInvites: [ true ]
         });
 
         this.objectService.getObject().subscribe( ( data: any ) => {
@@ -27,12 +27,12 @@ export class ObjectPage {
         })
     }
 
-    setObject () : Promise<any> {
+    setEvent () : Promise<any> {
 
         let objectToSet = {
-            boolean: this.newObject.value.boolean,
-            number: this.newObject.value.number ? parseInt( this.newObject.value.number ) : null,
-            string: this.newObject.value.string
+            title: this.newObject.value.title,
+            location: this.newObject.value.location,
+            sendInvites: this.newObject.value.sendInvites,
         }
 
         return this.objectService.setObject( objectToSet )

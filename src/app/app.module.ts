@@ -16,6 +16,7 @@ import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
+import { ManagersPage } from '../pages/managers/managers';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../pages/session-detail/session-detail';
@@ -25,7 +26,8 @@ import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
-import { ListPage } from '../pages/list/list';
+import { PlayerListPage } from '../pages/player-list/player-list';
+import { PlayerDetailPage } from '../pages/player-detail/player-detail';
 import { ObjectPage } from '../pages/object/object';
 
 import { ConferenceData } from '../providers/conference-data';
@@ -43,6 +45,7 @@ import firebase from 'firebase';
     AccountPage,
     LoginPage,
     MapPage,
+    ManagersPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
@@ -53,7 +56,8 @@ import firebase from 'firebase';
     TabsPage,
     TutorialPage,
     SupportPage,
-    ListPage,
+    PlayerListPage,
+    PlayerDetailPage,
     ObjectPage
   ],
   imports: [
@@ -74,7 +78,9 @@ import firebase from 'firebase';
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
         { component: SignupPage, name: 'SignupPage', segment: 'signup' },
-        { component: ListPage, name: 'ListPage', segment: 'list' },
+        { component: PlayerListPage, name: 'PlayerList', segment: 'playerList' },
+        { component: PlayerDetailPage, name: 'PlayerDetail', segment: 'playerDetail/:playerId' },
+        { component: ManagersPage, name: 'ManagersPage', segment: 'list' },
         { component: ObjectPage, name: 'ObjectPage', segment: 'object' }
       ]
     }),
@@ -87,6 +93,7 @@ import firebase from 'firebase';
     AccountPage,
     LoginPage,
     MapPage,
+    ManagersPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
@@ -97,7 +104,8 @@ import firebase from 'firebase';
     TabsPage,
     TutorialPage,
     SupportPage,
-    ListPage,
+    PlayerListPage,
+    PlayerDetailPage,
     ObjectPage
   ],
   providers: [
