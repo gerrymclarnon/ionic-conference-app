@@ -26,7 +26,8 @@ export class PlayerDetailPage {
     this.player = navParams.data.player ? navParams.data.player : {title: ""};
 
     this.newListItem = this.formBuilder.group({
-      title: [this.player.title, Validators.required]
+      title: [this.player.title, Validators.required],
+      email: [this.player.email, Validators.email]
     });
 
   }
@@ -57,7 +58,10 @@ export class PlayerDetailPage {
   }
 
   addListItem() {
-    this.listService.addListItem({title: this.newListItem.value.title})
+    this.listService.addListItem({
+      title: this.newListItem.value.title,
+      email: this.newListItem.value.email
+    })
       .then(() => {
         this.newListItem.reset();
         this.navCtrl.push(PlayerListPage);
@@ -66,7 +70,11 @@ export class PlayerDetailPage {
   }
 
   updateListItem() {
-    this.listService.updateListItem({key: this.player.key, title: this.newListItem.value.title})
+    this.listService.updateListItem({
+      key: this.player.key,
+      title: this.newListItem.value.title,
+      email: this.newListItem.value.email
+    })
       .then(() => {
         this.newListItem.reset();
         this.navCtrl.pop();
