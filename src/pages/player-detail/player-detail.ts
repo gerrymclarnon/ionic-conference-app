@@ -33,19 +33,18 @@ export class PlayerDetailPage {
   }
 
   ionViewWillEnter() {
-    this.setbackButtonText(this.readonly);
+    this.setBackButtonText(this.readonly);
   }
 
   toggleReadonly() {
     this.readonly = !this.readonly;
-    this.setbackButtonText(this.readonly);
+    this.setBackButtonText(this.readonly);
   }
 
-  private setbackButtonText(readonly: boolean) {
+  private setBackButtonText(readonly: boolean) {
     this.zone.run(() => {
-      if (!readonly) {
-        this.viewCtrl.setBackButtonText('Cancel');
-      }
+      let backButtonText = readonly ? 'Players' : 'Cancel';
+      this.viewCtrl.setBackButtonText(backButtonText);
     });
   }
 
