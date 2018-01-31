@@ -1,12 +1,10 @@
 export class Player {
-  key: string;
+  id: string;
   title: string;
   email: string;
 
-  constructor(key: string, title: string, email: string) {
-    this.key = key;
+  constructor(title: string, email: string) {
     this.title = title;
     this.email = email;
   }
-
 }

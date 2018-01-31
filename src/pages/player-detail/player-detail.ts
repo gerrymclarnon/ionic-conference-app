@@ -5,6 +5,8 @@ import {ListService} from '../../providers/list-service';
 import {NavController, ViewController, NavParams} from "ionic-angular";
 import {PlayerListPage} from "../../pages/player-list/player-list";
 
+import {Player} from "../../models/Player";
+
 @Component({
   selector: 'page-player-detail',
   templateUrl: 'player-detail.html',
@@ -48,8 +50,9 @@ export class PlayerDetailPage {
     });
   }
 
+  // TODO: move to listService?
   save() {
-    if (this.player.key) {
+    if (this.player.id) {
       this.updateListItem();
     } else {
       this.addListItem();
@@ -57,10 +60,9 @@ export class PlayerDetailPage {
   }
 
   addListItem() {
-    this.listService.addListItem({
-      title: this.newListItem.value.title,
-      email: this.newListItem.value.email
-    })
+    this.listService.addListItem(new Player(
+      this.newListItem.value.title,
+      this.newListItem.value.email))
       .then(() => {
         this.newListItem.reset();
         this.navCtrl.push(PlayerListPage);
@@ -69,11 +71,14 @@ export class PlayerDetailPage {
   }
 
   updateListItem() {
-    this.listService.updateListItem({
-      key: this.player.key,
-      title: this.newListItem.value.title,
-      email: this.newListItem.value.email
-    })
+    // Replace with 2-way binding?
+    let player: Player = new Player(
+      this.newListItem.value.title,
+      this.newListItem.value.email
+    );
+    player.id  = this.player.id;
+
+    this.listService.updateListItem(player)
       .then(() => {
         this.newListItem.reset();
         this.navCtrl.pop();

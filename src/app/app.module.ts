@@ -36,7 +36,20 @@ import { UserService } from '../providers/user-service';
 import { ListService } from '../providers/list-service';
 import { ObjectService } from '../providers/object-service';
 
-import firebase from 'firebase';
+import { AngularFireModule } from 'angularfire2';
+// import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
+// import { AngularFireAuthModule } from 'angularfire2/auth';
+
+// Fill this in with your own Firebase database config
+export const firebaseConfig = {
+  apiKey: "AIzaSyB8Qx4nlrKBectiq1PxdMonO-IKyGP3lpA",
+  authDomain: "email-8734c.firebaseapp.com",
+  databaseURL: "https://email-8734c.firebaseio.com",
+  projectId: "email-8734c",
+  storageBucket: "email-8734c.appspot.com",
+  messagingSenderId: "476597523348"
+};
 
 @NgModule({
   declarations: [
@@ -84,7 +97,11 @@ import firebase from 'firebase';
         { component: ObjectPage, name: 'ObjectPage', segment: 'object' }
       ]
     }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig),
+    // AngularFireDatabaseModule,
+    AngularFirestoreModule
+    // AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -114,23 +131,13 @@ import firebase from 'firebase';
     UserData,
     InAppBrowser,
     SplashScreen,
+    // AngularFireDatabase,
+    AngularFirestore,
     UserService,
     ListService,
     ObjectService
   ]
 })
-export class AppModule {
-  constructor() {
 
-    // Fill this in with your own Firebase database config
-    var firebaseConfig = {
-      apiKey: "AIzaSyB8Qx4nlrKBectiq1PxdMonO-IKyGP3lpA",
-      authDomain: "email-8734c.firebaseapp.com",
-      databaseURL: "https://email-8734c.firebaseio.com",
-      projectId: "email-8734c",
-      storageBucket: "email-8734c.appspot.com",
-      messagingSenderId: "476597523348"
-    };
-    firebase.initializeApp( firebaseConfig );
-  }
-}
+
+export class AppModule {}
