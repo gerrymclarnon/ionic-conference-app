@@ -1,60 +1,53 @@
 import {Injectable, NgZone} from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-// import { AngularFireDatabase } from 'angularfire2/database';
+// import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Player} from '../models/Player';
 
 @Injectable()
 export class ListService {
 
+  public items: Observable<Player[]>;
   private itemsCollection: AngularFirestoreCollection<Player>;
-  items: Observable<Player[]>;
+  private firestore: AngularFirestore;
 
-  constructor(public zone: NgZone, db: AngularFirestore) {
-    this.db = db;
-    this.itemsCollection = db.collection<Player>('list');
+  constructor(public zone: NgZone, firestore: AngularFirestore) {
+    this.firestore = firestore;
+    this.itemsCollection = this.firestore.collection<Player>('list');
   }
 
   getList(): Observable<Player[]> {
     return this.itemsCollection.valueChanges();
   }
 
-  // addListItem(player: Player): Promise<any> {
+  // private itemDoc: AngularFirestoreDocument<Player>;
+  // item: Observable<Player>;
+  // getListItem(id: string): Observable<Player[]> {
+  //   this.itemDoc = firestore.doc<Player>('list/' + id);
+  //   this.item = this.itemDoc.valueChanges();
+  // }
 
-  // Use a modified JSON.stringify(player) as id must be first object
+  // Firestore expects this for add...
   // this.itemsCollection.add({
   //   id: player.id,
   //   title: player.title,
   //   email: player.email
   // });
   addListItem(player: Player): Promise<void> {
-    player.id = this.db.createId();
+    player.id = this.firestore.createId();
 
-    return this.itemsCollection.doc(player.id).set(JSON.parse(JSON.stringify(player)));
+    return this.itemsCollection.doc(player.id).set(this.toJSON(player));
   }
 
-  // updateListItem(listItem: any): Promise<any> {
-  //
-  //   return new Promise((resolve, reject) => {
-  //     firebase.database().ref("/list/" + listItem.key).update(listItem)
-  //       .then(() => resolve())
-  //       .catch(() => reject());
-  //   });
-  // }
   updateListItem(player: Player): Promise<void> {
-    return this.itemsCollection.doc(player.id).update(JSON.parse(JSON.stringify(player)));
+    return this.itemsCollection.doc(player.id).update(this.toJSON(player));
   }
 
-  // removeListItem(listItem: any): Promise<any> {
-  //
-  //   return new Promise((resolve, reject) => {
-  //     firebase.database().ref("/list/" + listItem.key).remove()
-  //       .then(() => resolve())
-  //       .catch(() => reject());
-  //   });
-  // }
   removeListItem(player: Player): Promise<void> {
     return this.itemsCollection.doc(player.id).delete();
   }
 
+  protected toJSON(player: Player) {
+    return JSON.parse(JSON.stringify(player));
+  }
 }
