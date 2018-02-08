@@ -19,11 +19,11 @@ export class PlayerListPage {
   }
 
   gotoPlayerDetail(player: any) {
-    this.navCtrl.push(PlayerDetailPage, {player: player, readonly: true});
+    this.navCtrl.push(PlayerDetailPage, {playerId: player.id, readonly: true});
   }
 
   addPlayer() {
-    this.navCtrl.push(PlayerDetailPage, {player: null, readonly: false});
+    this.navCtrl.push(PlayerDetailPage, {playerId: null, readonly: false});
   }
 
 }

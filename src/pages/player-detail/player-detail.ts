@@ -14,7 +14,8 @@ import {Player} from "../../models/Player";
 export class PlayerDetailPage {
 
   newListItem: FormGroup;
-  player: any;
+  player: any = {};
+  playerId: any;
   readonly: boolean = false;
 
   constructor(public listService: ListService,
@@ -24,14 +25,26 @@ export class PlayerDetailPage {
               public viewCtrl: ViewController,
               public zone:NgZone) {
 
-    this.readonly = navParams.data.readonly;
-    this.player = navParams.data.player ? navParams.data.player : {title: ""};
+    this.readonly = navParams.data.readonly || true;
+    this.playerId = navParams.data.playerId;
 
     this.newListItem = this.formBuilder.group({
       title: [this.player.title, Validators.required],
       email: [this.player.email, Validators.email]
     });
 
+    if (this.playerId) {
+      this.listService.getListItem(this.playerId).subscribe((data: any) => {
+        this.player = data;
+
+        if (this.player) {
+          this.newListItem.setValue({
+            title: this.player.title,
+            email: this.player.email
+          });
+        }
+      });
+    }
   }
 
   ionViewWillEnter() {
@@ -43,6 +56,7 @@ export class PlayerDetailPage {
     this.setBackButtonText(this.readonly);
   }
 
+  // TODO: workaround the hidden back button when page refreshed due to nothing in History object!
   private setBackButtonText(readonly: boolean) {
     this.zone.run(() => {
       let backButtonText = readonly ? 'Players' : 'Cancel';

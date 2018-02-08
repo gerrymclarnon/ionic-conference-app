@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 // Providers
 import { ListService } from '../../providers/list-service';
@@ -17,9 +17,9 @@ export class ManagersPage {
     constructor ( public listService: ListService,
                     public formBuilder: FormBuilder ) {
 
-        this.newListItem = this.formBuilder.group({
-            title: [ null, Validators.required ]
-        });
+        // this.newListItem = this.formBuilder.group({
+        //     title: [ null, Validators.required ]
+        // });
 
         this.listService.getList().subscribe( ( data: any ) => {
             this.list = data;
@@ -28,9 +28,9 @@ export class ManagersPage {
 
     addListItem () {
 
-        this.listService.addListItem( { title: this.newListItem.value.title } )
-            .then( ( ) => this.newListItem.reset() )
-            .catch( ( error: any ) => console.error( error ) );
+        // this.listService.addListItem( { title: this.newListItem.value.title } )
+        //     .then( ( ) => this.newListItem.reset() )
+        //     .catch( ( error: any ) => console.error( error ) );
     }
 
     removeListItem ( listItem: any ) {

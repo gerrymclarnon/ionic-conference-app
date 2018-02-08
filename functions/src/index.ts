@@ -15,10 +15,10 @@
  */
 'use strict';
 
-const functions = require('firebase-functions');
-var nodemailer = require('nodemailer');
-var handlebars = require('handlebars');
-var fs = require('fs');
+import * as functions from 'firebase-functions';
+import * as nodemailer from 'nodemailer';
+import * as handlebars from 'handlebars';
+import * as fs from 'fs';
 
 const gmailEmail = encodeURIComponent(functions.config().gmail.email);
 const gmailPassword = encodeURIComponent(functions.config().gmail.password);
@@ -26,14 +26,14 @@ const mailTransport = nodemailer.createTransport(
   `smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
 
-exports.sendEmailConfirmationListItem = functions.database.ref('/object').onWrite(event => {
-  var data = {
+export const sendEmailConfirmationListItem = functions.database.ref('/object').onWrite(event => {
+  const data = {
     game: event.data.val()
   };
 
-  var hbs = fs.readFileSync('game.hbs', 'utf8');
-  var template = handlebars.compile(hbs);
-  var html = template(data);
+  const hbs = fs.readFileSync('game.hbs', 'utf8');
+  const template = handlebars.compile(hbs);
+  const html = template(data);
 
   const mailOptions = {
     to: 'gerry@mclarnonworld.com',
