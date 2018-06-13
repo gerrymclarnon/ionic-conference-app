@@ -19,6 +19,7 @@ import * as functions from 'firebase-functions';
 import * as nodemailer from 'nodemailer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
+import * as path from 'path';
 
 const gmailEmail = encodeURIComponent(functions.config().gmail.email);
 const gmailPassword = encodeURIComponent(functions.config().gmail.password);
@@ -26,12 +27,12 @@ const mailTransport = nodemailer.createTransport(
   `smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
 
-export const sendEmailConfirmationListItem = functions.database.ref('/object').onWrite(event => {
+exports.sendMatchInviteEmail = functions.firestore.document('/games/{uid}').onWrite((change, context) => {
   const data = {
-    game: event.data.val()
+    game: change.after.data()
   };
 
-  const hbs = fs.readFileSync('game.hbs', 'utf8');
+  const hbs = fs.readFileSync(path.join(__dirname, 'game.hbs'), 'utf8');
   const template = handlebars.compile(hbs);
   const html = template(data);
 

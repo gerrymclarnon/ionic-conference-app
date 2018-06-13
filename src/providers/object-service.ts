@@ -1,32 +1,45 @@
 import { Injectable, NgZone } from '@angular/core';
-import firebase from 'firebase';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
+import {Game} from "../models/Game";
 
 @Injectable()
 export class ObjectService {
 
-    constructor( public zone: NgZone ) {
+  public items: Observable<Game[]>;
 
-    }
+  private PATH: string = "games";
+  private firestore: AngularFirestore;
+  private itemsCollection: AngularFirestoreCollection<Game>;
 
-    getObject () : Observable<any> {
+  constructor(firestore: AngularFirestore) {
+    this.firestore = firestore;
+    this.itemsCollection = this.firestore.collection<Game>(this.PATH);
+  }
 
-        return Observable.create( ( observer: any ) => {
-            firebase.database().ref( "/object" )
-                .on( "value", ( snapshot: any ) => {
-                    this.zone.run( () => {
-                        observer.next( snapshot.val() ? snapshot.val() : {} );
-                    });
-                });
-            });
-    }
+  getList(): Observable<Game[]> {
+    return this.itemsCollection.valueChanges();
+  }
 
-    setObject ( object: any ) : Promise<any> {
+  getListItem(id: string): Observable<Game> {
+    let itemDoc: AngularFirestoreDocument<Game> = this.firestore.doc<Game>(this.PATH + '/' + id);
+    return itemDoc.valueChanges();
+  }
 
-        return new Promise( ( resolve, reject ) => {
-            return firebase.database().ref( "/object" ).set( object )
-                .then( ( ) => resolve() )
-                .catch( ( ) => reject() );
-        });
-    }
+  addListItem(Game: Game): Promise<void> {
+    Game.id = this.firestore.createId();
+    return this.itemsCollection.doc(Game.id).set(this.toJSON(Game));
+  }
+
+  updateListItem(Game: Game): Promise<void> {
+    return this.itemsCollection.doc(Game.id).update(this.toJSON(Game));
+  }
+
+  removeListItem(Game: Game): Promise<void> {
+    return this.itemsCollection.doc(Game.id).delete();
+  }
+
+  protected toJSON(Game: Game) {
+    return JSON.parse(JSON.stringify(Game));
+  }
 }

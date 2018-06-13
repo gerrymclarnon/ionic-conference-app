@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Player} from '../models/Player';
@@ -12,9 +12,10 @@ export class ListService {
   private firestore: AngularFirestore;
   private itemsCollection: AngularFirestoreCollection<Player>;
 
-  constructor(public zone: NgZone, firestore: AngularFirestore) {
+  constructor(firestore: AngularFirestore) {
     this.firestore = firestore;
-    this.itemsCollection = this.firestore.collection<Player>(this.PATH);
+    // this.itemsCollection = this.firestore.collection<Player>(this.PATH);
+    this.itemsCollection = this.firestore.collection("players", ref => ref.orderBy('email'));
   }
 
   getList(): Observable<Player[]> {
