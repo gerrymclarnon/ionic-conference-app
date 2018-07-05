@@ -1,10 +1,10 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import {Game} from "../models/Game";
 
 @Injectable()
-export class ObjectService {
+export class GameService {
 
   public items: Observable<Game[]>;
 
@@ -14,7 +14,7 @@ export class ObjectService {
 
   constructor(firestore: AngularFirestore) {
     this.firestore = firestore;
-    this.itemsCollection = this.firestore.collection<Game>(this.PATH);
+    this.itemsCollection = this.firestore.collection<Game>(this.PATH, ref => ref.orderBy('datetime'));
   }
 
   getList(): Observable<Game[]> {
@@ -26,20 +26,15 @@ export class ObjectService {
     return itemDoc.valueChanges();
   }
 
-  addListItem(Game: Game): Promise<void> {
-    Game.id = this.firestore.createId();
-    return this.itemsCollection.doc(Game.id).set(this.toJSON(Game));
+  addListItem(game: Game): Promise<void> {
+    return this.itemsCollection.doc(game.datetime.toISOString()).set(Object.assign({}, game));
   }
 
-  updateListItem(Game: Game): Promise<void> {
-    return this.itemsCollection.doc(Game.id).update(this.toJSON(Game));
+  updateListItem(game: Game): Promise<void> {
+    return this.itemsCollection.doc(game.id).update(Object.assign({}, game));
   }
 
-  removeListItem(Game: Game): Promise<void> {
-    return this.itemsCollection.doc(Game.id).delete();
-  }
-
-  protected toJSON(Game: Game) {
-    return JSON.parse(JSON.stringify(Game));
+  removeListItem(game: Game): Promise<void> {
+    return this.itemsCollection.doc(game.id).delete();
   }
 }

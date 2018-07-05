@@ -28,13 +28,13 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 import { PlayerListPage } from '../pages/player-list/player-list';
 import { PlayerDetailPage } from '../pages/player-detail/player-detail';
-import { ObjectPage } from '../pages/object/object';
+import { GamePage } from '../pages/game/game';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { UserService } from '../providers/user-service';
-import { ListService } from '../providers/list-service';
-import { ObjectService } from '../providers/object-service';
+import { PlayerService } from '../providers/player-service';
+import { GameService } from '../providers/game-service';
 
 import { AngularFireModule } from 'angularfire2';
 // import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -71,7 +71,7 @@ export const firebaseConfig = {
     SupportPage,
     PlayerListPage,
     PlayerDetailPage,
-    ObjectPage
+    GamePage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +94,7 @@ export const firebaseConfig = {
         { component: PlayerListPage, name: 'PlayerList', segment: 'playerList' },
         { component: PlayerDetailPage, name: 'PlayerDetail', segment: 'playerDetail/:playerId' },
         { component: ManagersPage, name: 'ManagersPage', segment: 'list' },
-        { component: ObjectPage, name: 'ObjectPage', segment: 'object' }
+        { component: GamePage, name: 'GamePage', segment: 'game' }
       ]
     }),
     IonicStorageModule.forRoot(),
@@ -123,7 +123,7 @@ export const firebaseConfig = {
     SupportPage,
     PlayerListPage,
     PlayerDetailPage,
-    ObjectPage
+    GamePage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -134,8 +134,8 @@ export const firebaseConfig = {
     // AngularFireDatabase,
     AngularFirestore,
     UserService,
-    ListService,
-    ObjectService
+    PlayerService,
+    GameService
   ]
 })
 

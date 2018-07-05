@@ -1,7 +1,7 @@
 import {Component, NgZone} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 // Providers
-import {ListService} from '../../providers/list-service';
+import {PlayerService} from '../../providers/player-service';
 import {NavController, ViewController, NavParams} from "ionic-angular";
 import {PlayerListPage} from "../../pages/player-list/player-list";
 
@@ -18,7 +18,7 @@ export class PlayerDetailPage {
   playerId: any;
   readonly: boolean = false;
 
-  constructor(public listService: ListService,
+  constructor(public listService: PlayerService,
               public formBuilder: FormBuilder,
               public navCtrl: NavController,
               public navParams: NavParams,
@@ -76,7 +76,8 @@ export class PlayerDetailPage {
   addListItem() {
     this.listService.addListItem(new Player(
       this.newListItem.value.title,
-      this.newListItem.value.email))
+      this.newListItem.value.email,
+    false))
       .then(() => {
         this.newListItem.reset();
         this.navCtrl.push(PlayerListPage);
@@ -88,7 +89,8 @@ export class PlayerDetailPage {
     // Replace with 2-way binding?
     let player: Player = new Player(
       this.newListItem.value.title,
-      this.newListItem.value.email
+      this.newListItem.value.email,
+      false
     );
     player.id  = this.player.id;
 

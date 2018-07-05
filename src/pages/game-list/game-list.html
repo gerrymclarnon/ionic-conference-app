@@ -16,11 +16,11 @@
 
 </ion-header>
 
-<ion-content padding-left>
+<ion-content padding>
 
-  <ion-list padding-left>
-    <ion-item-sliding *ngFor="let player of players">
-      <button ion-item no-padding (click)="gotoPlayerDetail(player)">
+  <ion-list>
+    <ion-item-sliding *ngFor="let player of games">
+      <button ion-item (click)="gotoPlayerDetail(player)">
         <h3>{{player.title}}</h3>
         <p>
           {{player.email}}

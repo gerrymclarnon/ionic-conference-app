@@ -9,7 +9,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding-left>
 
     <!--<form [formGroup]="newListItem" (ngSubmit)="addListItem()">-->
         <!--<ion-item>-->
@@ -20,7 +20,7 @@
     <!--</form>-->
 
     <ion-list>
-        <ion-item *ngFor="let listItem of list">
+        <ion-item no-padding *ngFor="let listItem of list">
             {{ listItem.title }}
             <button ion-button item-right (click)="removeListItem( listItem )"><ion-icon name="close"></ion-icon></button>
         </ion-item>

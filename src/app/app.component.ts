@@ -17,7 +17,7 @@ import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { SupportPage } from '../pages/support/support';
 import { PlayerListPage } from '../pages/player-list/player-list';
-import { ObjectPage } from '../pages/object/object';
+import { GamePage } from '../pages/game/game';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -51,7 +51,7 @@ export class ConferenceApp {
     { title: 'About', name: 'Tabs', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' },
     { title: 'Players', name: 'Players', component: TabsPage, tabComponent: PlayerListPage, index: 4, icon: 'contacts' },
     { title: 'Managers', name: 'Managers', component: TabsPage, tabComponent: ManagersPage, index: 5, icon: 'briefcase' },
-    { title: 'Next Game', name: 'Next Game', component: TabsPage, tabComponent: ObjectPage, index: 6, icon: 'football' }
+    { title: 'Next Game', name: 'Next Game', component: TabsPage, tabComponent: GamePage, index: 6, icon: 'football' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },

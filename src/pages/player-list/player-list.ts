@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ListService} from '../../providers/list-service';
+import {PlayerService} from '../../providers/player-service';
 import {NavController} from "ionic-angular";
 import {PlayerDetailPage} from "../player-detail/player-detail";
 
@@ -11,7 +11,7 @@ export class PlayerListPage {
 
   players: any = [];
 
-  constructor(public listService: ListService, public navCtrl: NavController) {
+  constructor(public listService: PlayerService, public navCtrl: NavController) {
 
     this.listService.getList().subscribe((data: any) => {
       this.players = data;

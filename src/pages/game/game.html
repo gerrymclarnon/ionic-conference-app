@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Next Game</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="gameFormGroup" (ngSubmit)="addGame()">
+    <ion-item padding-left>
+      <ion-label floating>Title</ion-label>
+      <ion-input type="text" formControlName="title"></ion-input>
+    </ion-item>
+    <ion-item padding-left>
+      <ion-label floating>Location</ion-label>
+      <ion-input type="text" formControlName="location"></ion-input>
+    </ion-item>
+    <ion-item padding-left>
+      <ion-label floating>Date</ion-label>
+      <ion-datetime displayFormat="DDDD D MMMM YYYY" pickerFormat="D MMM YYYY" formControlName="date"></ion-datetime>
+    </ion-item>
+    <ion-item padding-left>
+      <ion-label floating>Kick Off</ion-label>
+      <ion-datetime displayFormat="hh:mm A" formControlName="kickoff"></ion-datetime>
+    </ion-item>
+    <!--<ion-item padding-left>-->
+      <!--<ion-label floating>Send Invites</ion-label>-->
+      <!--<ion-toggle formControlName="sendInvites"></ion-toggle>-->
+    <!--</ion-item>-->
+
+    <ion-list *ngIf="game" padding-left>
+      <ion-item-sliding *ngFor="let player of game.players">
+        <button ion-item no-padding (click)="gotoPlayerDetail(player)">
+          <h3>{{player.title}}</h3>
+        </button>
+      </ion-item-sliding>
+    </ion-list>
+
+    <button ion-button full type="submit" color="secondary">Add</button>
+  </form>
+
+</ion-content>

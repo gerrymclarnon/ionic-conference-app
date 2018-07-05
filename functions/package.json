@@ -2,6 +2,7 @@
   "name": "email-confirmation-functions",
   "description": "Send Email confirmation upon sign up to a Mailing list Firebase Functions sample",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "firebase-admin": "^5.11.0",
     "firebase-functions": "^1.0.4",
     "handlebars": "^4.0.11",

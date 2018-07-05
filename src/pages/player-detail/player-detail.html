@@ -20,14 +20,14 @@
 
   <form [formGroup]="newListItem">
     <ion-item>
-      <ion-label>Name</ion-label>
+      <ion-label floating>Name</ion-label>
       <ion-input type="text" formControlName="title" readonly="{{readonly}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Email</ion-label>
+      <ion-label floating>Email</ion-label>
       <ion-input type="email" formControlName="email" readonly="{{readonly}}"></ion-input>
     </ion-item>
-    <button *ngIf="!readonly" ion-button (click)="removeListItem()">Delete</button>
+    <button *ngIf="!readonly" color="danger" ion-button full (click)="removeListItem()">Delete</button>
   </form>
 
 </ion-content>

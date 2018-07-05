@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 
 // Providers
-import { ListService } from '../../providers/list-service';
+import { PlayerService } from '../../providers/player-service';
+import {Player} from "../../models/Player";
 
 @Component({
     selector: 'page-list',
@@ -14,28 +15,33 @@ export class ManagersPage {
     list: any = [];
 
 
-    constructor ( public listService: ListService,
+    constructor ( public playerService: PlayerService,
                     public formBuilder: FormBuilder ) {
 
         this.newListItem = this.formBuilder.group({
             title: [ null, Validators.required ]
         });
 
-        this.listService.getList().subscribe( ( data: any ) => {
+        this.playerService.getManagerList().subscribe( (data: any ) => {
             this.list = data;
         });
     }
 
     addListItem () {
-
-        this.listService.addListItem( { title: this.newListItem.value.title } )
-            .then( ( ) => this.newListItem.reset() )
-            .catch( ( error: any ) => console.error( error ) );
+      this.playerService.addListItem(new Player(
+        this.newListItem.value.title,
+        this.newListItem.value.email,
+        true))
+        .then(() => {
+          this.newListItem.reset();
+          // this.navCtrl.push(PlayerListPage);
+        })
+        .catch((error: any) => console.error(error));
     }
 
     removeListItem ( listItem: any ) {
 
-        this.listService.removeListItem( listItem )
+        this.playerService.removeListItem( listItem )
             .then( ( ) => {})
             .catch( ( error: any ) => console.error( error ) );
     }

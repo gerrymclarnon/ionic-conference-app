@@ -4,22 +4,28 @@ import {Observable} from 'rxjs/Observable';
 import {Player} from '../models/Player';
 
 @Injectable()
-export class ListService {
+export class PlayerService {
 
   public items: Observable<Player[]>;
 
   private PATH: string = "players";
   private firestore: AngularFirestore;
-  private itemsCollection: AngularFirestoreCollection<Player>;
+  private players: AngularFirestoreCollection<Player>;
+  private managers: AngularFirestoreCollection<Player>;
 
   constructor(firestore: AngularFirestore) {
     this.firestore = firestore;
-    // this.itemsCollection = this.firestore.collection<Player>(this.PATH);
-    this.itemsCollection = this.firestore.collection("players", ref => ref.orderBy('email'));
+    // this.players = this.firestore.collection<Player>(this.PATH);
+    this.players = this.firestore.collection("players", ref => ref.orderBy('email'));
+    this.managers = this.firestore.collection("players", ref => ref.where('manager', '==', true).orderBy('email'));
   }
 
   getList(): Observable<Player[]> {
-    return this.itemsCollection.valueChanges();
+    return this.players.valueChanges();
+  }
+
+  getManagerList(): Observable<Player[]> {
+    return this.managers.valueChanges();
   }
 
   getListItem(id: string): Observable<Player> {
@@ -28,19 +34,14 @@ export class ListService {
   }
 
   addListItem(player: Player): Promise<void> {
-    player.id = this.firestore.createId();
-    return this.itemsCollection.doc(player.id).set(this.toJSON(player));
+    return this.players.doc(player.email).set(Object.assign({}, player));
   }
 
   updateListItem(player: Player): Promise<void> {
-    return this.itemsCollection.doc(player.id).update(this.toJSON(player));
+    return this.players.doc(player.id).update(Object.assign({}, player));
   }
 
   removeListItem(player: Player): Promise<void> {
-    return this.itemsCollection.doc(player.id).delete();
-  }
-
-  protected toJSON(player: Player) {
-    return JSON.parse(JSON.stringify(player));
+    return this.players.doc(player.id).delete();
   }
 }
