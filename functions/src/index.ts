@@ -15,56 +15,59 @@
  */
 'use strict';
 
+import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-// import * as nodemailer from 'nodemailer';
-// import * as handlebars from 'handlebars';
-// import * as fs from 'fs';
-// import * as path from 'path';
 
-// const gmailEmail = encodeURIComponent(functions.config().gmail.email);
-// const gmailPassword = encodeURIComponent(functions.config().gmail.password);
-// const mailer = nodemailer.createTransport(
-//   `smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
+import * as nodemailer from 'nodemailer';
+import * as handlebars from 'handlebars';
+import * as fs from 'fs';
+import * as path from 'path';
 
-const sendgridApikey = functions.config().sendgrid.apikey;
-const sgMail = require('@sendgrid/mail');
+const gmailEmail = encodeURIComponent(functions.config().gmail.email);
+const gmailPassword = encodeURIComponent(functions.config().gmail.password);
+const mailer = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
+admin.initializeApp(functions.config().firebase);
 
 exports.sendMatchInviteEmail = functions.firestore.document('/games/{uid}').onWrite((change, context) => {
-  const data = {
-    game: change.after.data()
-  };
 
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  sgMail.setApiKey(`${sendgridApikey}`);
-  const msg = {
-    to: 'gerry@mclarnonworld.com',
-    from: 'gerry@mclarnonworld.com',
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-  };
+  const game = change.after.data();
+  const hbs = fs.readFileSync(path.join(__dirname, 'game.hbs'), 'utf8');
+  const template = handlebars.compile(hbs);
+  const db = admin.firestore();
 
-  return sgMail.send(msg).then(() => {
-    console.log('New game invite email sent with Sendgrid:');
+  const inviteRef = db.collection('invites').add({
+    name: 'Friday Night Footie Invite'
+  }).then(invite => {
+    console.log("inviteRef 1 = " + inviteRef);
+    console.log('Added invite with ID: ', invite.id);
+
+    const data = {
+      game: game,
+      invite: invite,
+      player: game.players[0]
+    };
+
+    const html = template(data);
+
+    const mailOptions = {
+      to: 'gerry@mclarnonworld.com',
+      subject: `New ${data.game.title}@${data.game.location} added`,
+      text: 'Are you up for a game?',
+      html: html
+    };
+
+    mailer.sendMail(mailOptions).then(() => {
+      console.log(`New game invite ${invite.id} email sent to: ${mailOptions.to}`);
+    });
+  }).catch(error => {
+    console.log(error);
   });
 
-  // const hbs = fs.readFileSync(path.join(__dirname, 'game.hbs'), 'utf8');
-  // const template = handlebars.compile(hbs);
-  // const html = template(data);
-  //
-  // const mailOptions = {
-  //   to: 'gerry@mclarnonworld.com',
-  //   subject: `New ${data.game.title}@${data.game.location} added`,
-  //   text: 'Are you up for a game?',
-  //   html: html
-  // };
-  //
-  // return mailer.sendMail(mailOptions).then(() => {
-  //   console.log('New game invite email sent to:', mailOptions.to);
-  // });
-});
+  console.log("inviteRef 2 = " + inviteRef);
 
+  return inviteRef;
+});
 
 
 // Sends an email confirmation when a user changes his mailing list subscription.
@@ -99,3 +102,22 @@ exports.sendMatchInviteEmail = functions.firestore.document('/games/{uid}').onWr
 //     console.log('New unsubscription confirmation email sent to:', val.email);
 //   });
 // });
+
+// const sendgridApikey = functions.config().sendgrid.apikey;
+// const sgMail = require('@sendgrid/mail');
+
+
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// sgMail.setApiKey(`${sendgridApikey}`);
+// const msg = {
+//   to: 'gerry@mclarnonworld.com',
+//   from: 'gerry@mclarnonworld.com',
+//   subject: 'Sending with SendGrid is Fun',
+//   text: 'and easy to do anywhere, even with Node.js',
+//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+// };
+//
+// return sgMail.send(msg).then(() => {
+//   console.log('New game invite email sent with Sendgrid:');
+// });
+

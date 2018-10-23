@@ -1,0 +1,31 @@
+{
+  "summary": "Footie",
+  "location": "Scotstoun Leisure Centre, 112 Danes Dr, Glasgow G14 9HD",
+  "description": "A chance to live the dream.",
+  "start": {
+    "dateTime": "2018-08-31T18:00:00+01:00",
+    "timeZone": "Europe/London"
+  },
+  "end": {
+    "dateTime": "2018-08-31T18:59:00+01:00",
+    "timeZone": "Europe/London"
+  },
+  "attendees": [
+    {
+      "email": "gerry@mclarnonworld.com"
+    }
+  ],
+  "reminders": {
+    "useDefault": false,
+    "overrides": [
+      {
+        "method": "email",
+        "minutes": 20
+      },
+      {
+        "method": "popup",
+        "minutes": 20
+      }
+    ]
+  }
+}

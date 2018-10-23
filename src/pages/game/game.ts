@@ -65,7 +65,7 @@ export class GamePage {
       this.gameFormGroup.value.location,
       datetime,
       true,
-      this.players))
+      this.allPlayers))
       .then(() => {
         // this.newListItem.reset();
         // this.navCtrl.push(PlayerListPage);
