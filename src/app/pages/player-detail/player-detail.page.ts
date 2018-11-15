@@ -38,7 +38,7 @@ export class PlayerDetailPage {
         }
       });
     } else {
-      this.player = new Player("", "", "");
+      this.player = new Player("", "", false);
     }
 
     this.newListItem = this.formBuilder.group({
