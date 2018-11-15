@@ -1,143 +1,29 @@
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { NgModule, ErrorHandler } from '@angular/core';
-
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
-
-import { ConferenceApp } from './app.component';
-
-import { AboutPage } from '../pages/about/about';
-import { PopoverPage } from '../pages/about-popover/about-popover';
-import { AccountPage } from '../pages/account/account';
-import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
-import { ManagersPage } from '../pages/managers/managers';
-import { SchedulePage } from '../pages/schedule/schedule';
-import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
-import { SessionDetailPage } from '../pages/session-detail/session-detail';
-import { SignupPage } from '../pages/signup/signup';
-import { SpeakerDetailPage } from '../pages/speaker-detail/speaker-detail';
-import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
-import { TabsPage } from '../pages/tabs-page/tabs-page';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { SupportPage } from '../pages/support/support';
-import { PlayerListPage } from '../pages/player-list/player-list';
-import { PlayerDetailPage } from '../pages/player-detail/player-detail';
-import { GamePage } from '../pages/game/game';
-
-import { ConferenceData } from '../providers/conference-data';
-import { UserData } from '../providers/user-data';
-import { UserService } from '../providers/user-service';
-import { PlayerService } from '../providers/player-service';
-import { GameService } from '../providers/game-service';
-
-import { AngularFireModule } from 'angularfire2';
-// import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
-// import { AngularFireAuthModule } from 'angularfire2/auth';
-
-// Fill this in with your own Firebase database config
-export const firebaseConfig = {
-  apiKey: "AIzaSyB8Qx4nlrKBectiq1PxdMonO-IKyGP3lpA",
-  authDomain: "email-8734c.firebaseapp.com",
-  databaseURL: "https://email-8734c.firebaseio.com",
-  projectId: "email-8734c",
-  storageBucket: "email-8734c.appspot.com",
-  messagingSenderId: "476597523348"
-};
+import {AngularFireModule} from "@angular/fire";
+import {AngularFirestoreModule} from "@angular/fire/firestore";
+import { firebaseConfig } from './credentials';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    ConferenceApp,
-    AboutPage,
-    AccountPage,
-    LoginPage,
-    MapPage,
-    ManagersPage,
-    PopoverPage,
-    SchedulePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
-    SignupPage,
-    SpeakerDetailPage,
-    SpeakerListPage,
-    TabsPage,
-    TutorialPage,
-    SupportPage,
-    PlayerListPage,
-    PlayerDetailPage,
-    GamePage
-  ],
   imports: [
     BrowserModule,
-    HttpModule,
-    IonicModule.forRoot(ConferenceApp, {}, {
-      links: [
-        { component: TabsPage, name: 'TabsPage', segment: 'tabs-page' },
-        { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
-        { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:sessionId' },
-        { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
-        { component: SpeakerListPage, name: 'SpeakerList', segment: 'speakerList' },
-        { component: SpeakerDetailPage, name: 'SpeakerDetail', segment: 'speakerDetail/:speakerId' },
-        { component: MapPage, name: 'Map', segment: 'map' },
-        { component: AboutPage, name: 'About', segment: 'about' },
-        { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
-        { component: SupportPage, name: 'SupportPage', segment: 'support' },
-        { component: LoginPage, name: 'LoginPage', segment: 'login' },
-        { component: AccountPage, name: 'AccountPage', segment: 'account' },
-        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
-        { component: PlayerListPage, name: 'PlayerList', segment: 'playerList' },
-        { component: PlayerDetailPage, name: 'PlayerDetail', segment: 'playerDetail/:playerId' },
-        { component: ManagersPage, name: 'ManagersPage', segment: 'list' },
-        { component: GamePage, name: 'GamePage', segment: 'game' }
-      ]
-    }),
+    AppRoutingModule,
+    HttpClientModule,
+    IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
-    // AngularFireDatabaseModule,
     AngularFirestoreModule
-    // AngularFireAuthModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    ConferenceApp,
-    AboutPage,
-    AccountPage,
-    LoginPage,
-    MapPage,
-    ManagersPage,
-    PopoverPage,
-    SchedulePage,
-    ScheduleFilterPage,
-    SessionDetailPage,
-    SignupPage,
-    SpeakerDetailPage,
-    SpeakerListPage,
-    TabsPage,
-    TutorialPage,
-    SupportPage,
-    PlayerListPage,
-    PlayerDetailPage,
-    GamePage
-  ],
-  providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData,
-    UserData,
-    InAppBrowser,
-    SplashScreen,
-    // AngularFireDatabase,
-    AngularFirestore,
-    UserService,
-    PlayerService,
-    GameService
-  ]
+  declarations: [AppComponent],
+  providers: [InAppBrowser, SplashScreen, StatusBar],
+  bootstrap: [AppComponent]
 })
-
-
 export class AppModule {}

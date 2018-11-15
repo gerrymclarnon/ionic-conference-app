@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="addPlayer()">Add</ion-button>
+    </ion-buttons>
+    <ion-title>Players</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-left>
+
+  <ion-list padding-left>
+    <ion-item-sliding *ngFor="let player of players">
+      <ion-item button no-padding (click)="gotoPlayerDetail(player)" [href]="'app/tabs/(players:player-details/'+ player.id + ')'">
+        <h3>{{player.title}}</h3>
+        <p>
+          {{player.email}}
+        </p>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
