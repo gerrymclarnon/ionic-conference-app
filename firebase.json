@@ -3,7 +3,8 @@
     "rules": "database.rules.json"
   },
   "functions": {
-    "predeploy": "npm --prefix functions run build"
+    "predeploy": "npm --prefix ./functions/ run build",
+    "source": "functions"
   },
   "hosting": {
     "public": "www",
@@ -18,5 +19,12 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
